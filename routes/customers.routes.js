@@ -9,10 +9,10 @@ const Customer = require('../models/customers.model');
 
 module.exports = app =>{
     app.get(/\/customer\/([0-9]+)/, (req,res) => {
-        let idFromUrl = req.url.replace('/customer/', '');
+        let idFromUrl = req.params.id;
         Customer.getbyId(idFromUrl, (err,result) =>{
             if(err){
-                console.log(err)
+                throw err
             }
             if(result){
                 res.send(result)
@@ -25,7 +25,7 @@ module.exports = app =>{
         let newCustomerLastName = req.body.lastname;
         Customer.postCustomer(newCustomerId,newCustomerName,newCustomerLastName, (err,result) =>{
             if(err){
-                console.log(err)
+                throw err
             }
             if(result){
                 res.send(result)
@@ -35,10 +35,10 @@ module.exports = app =>{
     app.patch(/\/customer\/([0-9]+)/, (req,res) => {
         let newCustomerName = req.body.name;
         let newCustomerLastName = req.body.lastname;
-        let idFromUrl = req.url.replace('/customer/', '');
+        let idFromUrl = req.params.id;
         Customer.updateInfo(newCustomerName, newCustomerLastName,idFromUrl, (err,result) =>{
             if(err){
-                console.log(err)
+                throw err
             }
             if(result){
                 res.send(result)
@@ -46,10 +46,10 @@ module.exports = app =>{
         })
     })
     app.delete(/\/customer\/([0-9]+)/, (req,res) => {
-        let idFromUrl = req.url.replace('/customer/', '');
+        let idFromUrl = req.params.id;
         Customer.deleteCustomer(idFromUrl, (err, result) => {
             if (err) {
-                console.log(err)
+                throw err
             }
             if (result) {
                 res.send(result)
